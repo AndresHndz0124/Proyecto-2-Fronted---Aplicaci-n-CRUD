@@ -1,0 +1,65 @@
+@media screen and (min-width : 1024px) {
+
+    a,
+    p {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width : 768px) and (max-width :1023px) {}
+
+@media screen and (max-width : 767px) {
+
+    header>nav a>img {
+        display: none;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.ti_nav {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    padding: 15px;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    background-color: black;
+}
+
+.ti_nav img {
+    width: 60px;
+    height: auto;
+    float: left;
+}
+
+
+
+h1 {
+    text-align: center;
+}
+
+.Blog {
+    padding: 20px 80px;
+}
+
+.Blog>h5,
+h1 {
+    margin-top: 20px;
+}
+
+.Blog>p {
+    margin-top: 10px;
+}
+
+
+#Botones {
+    justify-content: space-evenly;
+    display: flex;
+    margin: 15px;
+}

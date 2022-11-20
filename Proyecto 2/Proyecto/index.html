@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" type="text/css" href="./CSS/bootstrap.css" />
+    <title>Proyecto 2 MMoudlo-1</title>
+</head>
+
+<body>
+    <header>
+        <nav class="ti_nav">
+            <a href="#">
+                <img src="https://reverent-banach-cb9630.netlify.app/logo-ucamp-dark.png" alt="">
+            </a>
+            <a href="#">Aplicación CRUD</a>
+            <a href="#">Proyecto No. 2: Desarrollo de Software</a>
+
+
+        </nav>
+    </header>
+    <div class="Blog">
+        <h1>Formulario de ventas</h1>
+        <h5>A partir del siguiente formulario pondremos en pratica un proceso de software llamado CRUD que nos permite
+            manipular datos, utilizando la persistencia.</h5>
+        <p>El siguiente formulario se basa en un "Ejemplo" de almacenamiento de información de todos los roles que
+            pueden conformar el area de una diseño de producto de una empresa.</p>
+        <p>Para poder hacer uso de este formulario debes ingresar datos correspondientes al Rol, descricpción de las
+            funciones y el salario aproximado.</p>
+
+    </div>
+
+    <h1> CAREERS</h1>
+    <div class="container">
+        <div class="row">
+            <form>
+                <fieldset>
+                    <legend> Rol </legend>
+                    <input type="text" class="form-control" id="Rol" />
+                    <br />
+
+                    <legend> Salario </legend>
+                    <input type="number" class="form-control" id="Salario" />
+                    <br />
+
+                    <legend> Descripción </legend>
+                    <textarea name="description" rows="3" class="form-control" id="descr"></textarea>
+                    <br />
+                    <div id="Botones">
+                        <button type="button" id="crear" class="btn btn-success" onclick="add_row()">Agregar rol </button>
+                        <button type="button" id="borrarTodo" class="btn btn-danger" >Eliminar todo</button>
+
+                    </div>
+
+                </fieldset>
+            </form>
+
+
+            <hr />
+            <div id="segmento">
+                <h3> LISTA DE ROLES </h3>
+                <p id="counter"></p>
+            </div>
+
+            <table class="table table-borderer table-hover" id="data_table" style="width:715px">
+
+            </table>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="./JS/crud1.js"></script>
+</body>
+
+</html>
