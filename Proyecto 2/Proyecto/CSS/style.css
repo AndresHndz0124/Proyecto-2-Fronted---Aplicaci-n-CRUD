@@ -63,3 +63,11 @@ h1 {
     display: flex;
     margin: 15px;
 }
+
+#data_table {
+    align-content: center;
+}
+
+#tabla{
+justify-content: center;
+}
