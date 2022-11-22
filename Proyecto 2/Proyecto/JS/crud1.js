@@ -50,3 +50,84 @@ function add_row() {
 	}
     window.location.reload()
 }
+
+function Borrar(){
+	if(!confirm("¿Estás seguro de borrar la tabla? Todos los datos se perderán permanentemente",""))
+		return
+		localStorage.removeItem('usuarios')
+		window.location.reload()
+		} 
+
+
+
+
+
+
+//Funcionalidad de los botones
+//Eliminar Registro
+function eliminarRegistro(){
+	$(document).one('click','button[type="button"]', function(event){
+		let id=this.id;
+		var lista=[];
+		$("#listaProductos").each(function(){
+			var celdas=$(this).find('tr.Reg_'+id);
+			celdas.each(function(){
+				var registro=$(this).find('span.mid');
+				registro.each(function(){
+					lista.push($(this).html())
+				});
+			});
+		});
+		nuevoId=lista[0].substr(1);
+		//alert(nuevoId);
+		db.transaction(function(transaction){
+			var sql="DELETE FROM productos WHERE id="+nuevoId+";"
+			transaction.executeSql(sql,undefined,function(){
+				alert("Registro borrado satisfactoriamente, Por favor actualice la tabla")
+			}, function(transaction, err){
+				alert(err.message);
+			})
+		})
+	});
+}
+
+
+//Editar registro
+function editar(){
+		$(document).one('click','button[type="button"]', function(event){
+		let id=this.id;
+		var lista=[];
+		$("#listaProductos").each(function(){
+			var celdas=$(this).find('tr.Reg_'+id);
+			celdas.each(function(){
+				var registro=$(this).find('span');
+				registro.each(function(){
+					lista.push($(this).html())
+				});
+			});
+		});
+		document.getElementById("item").value=lista[1];
+		document.getElementById("precio").value=lista[2].slice(0,-5);
+		nuevoId=lista[0].substr(1);
+})
+}
+
+
+$(function (){
+$("#modificar").click(function(){
+	var nprod=$("#item").val();
+	var nprecio=$("#precio").val();
+	
+	db.transaction(function(transaction){
+		var sql="UPDATE productos SET item='"+nprod+"', precio='"+nprecio+"' WHERE id="+nuevoId+";"
+		transaction.executeSql(sql,undefined,function(){
+			cargarDatos();
+			limpiar();
+		}, function(transaction, err){
+			alert(err.message)
+		})
+	})
+})
+})
+// Para borrar toda la lista de Registros
+

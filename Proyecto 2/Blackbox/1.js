@@ -5,6 +5,7 @@ function delete_row(no) {
 }
 
 
+
 function add_row() {
     var new_title = document.getElementById("new_title").value;
     var new_description = document.getElementById("new_description").value;

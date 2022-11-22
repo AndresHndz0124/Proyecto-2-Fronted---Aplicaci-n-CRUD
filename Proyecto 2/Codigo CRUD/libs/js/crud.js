@@ -75,9 +75,7 @@ $("#crear").click(function(){
 	});
 
 //Cargar la lista de productos
-$("#listar").click(function(){
-	cargarDatos();
-})
+$("#listar").click(function(){cargarDatos();})
 
 //Funcion para listar y pintar tabla de productos en la página web
 function cargarDatos(){
