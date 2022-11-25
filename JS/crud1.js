@@ -130,9 +130,6 @@ function editar(no, ref) {
 
 	//Actualiza el contador
 	contador()
-
-	// Vuelve habilitar los botones
-	habilitar_botones()
 }
 
 function saveEdit(no, ref) {
