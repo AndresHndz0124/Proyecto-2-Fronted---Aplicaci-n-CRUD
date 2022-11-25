@@ -31,12 +31,12 @@ function edit_row(no, ref) {
     var description = document.getElementById("description_row" + no);
     console.log(description);
 
-    // var title_data = title.innerHTML;
-    // var description_data = description.innerHTML;
-    // document.getElementById("new_title").value = title_data;
-    // document.getElementById("new_description").value = description_data;
+    var title_data = title.innerHTML;
+    var description_data = description.innerHTML;
+    document.getElementById("new_title").value = title_data;
+    document.getElementById("new_description").value = description_data;
 
-    // ref.setAttribute("onclick", "saveEdit(this,'" + no + "')");
+    ref.setAttribute("onclick", "saveEdit(this,'" + no + "')");
 }
 
 function saveEdit(ref, no) {
@@ -46,9 +46,12 @@ function saveEdit(ref, no) {
     var parent = (ref.parentElement).parentElement;
 
     var list = document.getElementById(parent.id);
+
     var title = list.getElementsByClassName("titleData")[0];
     var desc = list.getElementsByClassName("descData")[0];
 
+console.log(parent)
+console.log(list)
     title.innerHTML = new_title;
     desc.innerHTML = new_description;
 
