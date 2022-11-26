@@ -114,13 +114,6 @@ function editar(no, ref) {
 	var description = document.getElementById("desc" + no);
 	// console.log(description);
 
-
-	//	Elimina del array el index de la fila a editar
-	let usuariosGuardados = JSON.parse(localStorage.getItem('usuarios'))
-	usuariosGuardados.splice(no, 1)
-	localStorage.setItem('usuarios', JSON.stringify(usuariosGuardados))
-
-
 	//Muestra en los inputs del HTMl la fila que se quiere editar de la tabla
 	var title_data = titl.innerHTML;
 	var salry_data = salry.innerHTML.split(" ", 1);
@@ -143,7 +136,13 @@ function editar(no, ref) {
 
 }
 
-function saveEdit(no, ref) {
+function saveEdit(no,ref,array) {
+
+	//	Elimina del array el index de la fila a editar
+	let User_Edit_delete = JSON.parse(localStorage.getItem('usuarios'))
+	User_Edit_delete.splice(no, 1)
+	localStorage.setItem('usuarios', JSON.stringify(User_Edit_delete))
+
 
 	var new_title = document.getElementById("Rol").value
 	var new_salary = document.getElementById("Salario").value;
