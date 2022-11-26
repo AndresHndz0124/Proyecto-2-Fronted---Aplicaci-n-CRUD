@@ -115,7 +115,7 @@ function editar(no, ref) {
 	// console.log(description);
 
 
-	//	Elimina el index a editar
+	//	Elimina del array el index de la fila a editar
 	let usuariosGuardados = JSON.parse(localStorage.getItem('usuarios'))
 	usuariosGuardados.splice(no, 1)
 	localStorage.setItem('usuarios', JSON.stringify(usuariosGuardados))
@@ -172,7 +172,7 @@ function saveEdit(no, ref) {
 	//Agregar el nuevo cambio al array del localstorage en la misma posición del anterior
 	let usuariosGuardados = JSON.parse(localStorage.getItem('usuarios'))
 	let row_edit = { Input: new_title, Salary: new_salary, Descripcion: new_description }
-	usuariosGuardados.splice(no, 0,row_edit)
+	usuariosGuardados.splice(no, 0, row_edit)
 	localStorage.setItem('usuarios', JSON.stringify(usuariosGuardados))
 
 	//Devuelve los input a vacio
@@ -201,6 +201,21 @@ function contador() {
 	}
 }
 
+//Función para deshabilitar click de los otros botones de edición
+function deshabilitar_botones() {
+	let arrayUsuarios = JSON.parse(localStorage.getItem('usuarios'))
+
+	//Este ciclo busca todos los botones de editar y remueve el atributo editar
+	arrayUsuarios.forEach((element, i) => {
+		let label_editar = document.getElementById(`A${i}`)
+		label_editar.removeAttribute("onclick");
+
+		//Al remover el atributo es remplazado por otro donde llamará la función bloquear
+		label_editar.setAttribute("onclick", `block(${i})`);
+	});
+
+}
+
 
 function Ocultar_botones() {
 	document.getElementById('crear').style.display = 'none';
@@ -219,15 +234,6 @@ function inputs_empty() {
 	document.getElementById("descr").value = "";
 }
 
-function deshabilitar_botones() {
-	let arrayUsuarios = JSON.parse(localStorage.getItem('usuarios'))
-	arrayUsuarios.forEach((element, i) => {
-		// console.log(i,document.getElementById(`A${i}`))
-		let label_editar = document.getElementById(`A${i}`)
-		label_editar.removeAttribute("onclick");
-	});
-
-}
 
 //Habilita nuevamente el atributo onclick en los botones de editar de cada registro
 function Devolver_propiedades() {
@@ -242,4 +248,9 @@ function Devolver_propiedades() {
 	contador()
 	habilitar_botones()
 	inputs_empty()
+}
+
+//Función que emite una alarma cuando se intenta editar más de un elemento
+function block(no) {
+	alert('Solo puedes editar un elemento a la vez')
 }
