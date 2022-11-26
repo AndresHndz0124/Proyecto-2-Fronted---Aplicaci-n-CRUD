@@ -48,10 +48,10 @@ function add_row() {
 	}
 	//En caso de no tener datos arroja la alerta
 	else {
-			alert('Debe ingresar un valor en todos los campos');
-			return false;
-		}
-	
+		alert('Debe ingresar un valor en todos los campos');
+		return false;
+	}
+
 
 
 	contador()
@@ -103,7 +103,7 @@ function editar(no, ref) {
 	//Cambia la clase del boton para poder cambiar el color con CSS
 	ref.className = "btn btn-warning";
 
-	//Remueve el aributo para evitar mapear el evento del botón	
+	//Remueve el atributo para evitar mapear el evento del botón	
 	ref.removeAttribute("onclick");
 
 	//Mapea la estructua del HTML con base al id y el parametro "no" que determina la posición sobre la cual se hizo click
@@ -113,6 +113,13 @@ function editar(no, ref) {
 	// console.log(salry);
 	var description = document.getElementById("desc" + no);
 	// console.log(description);
+
+
+	//	Elimina el index a editar
+	let usuariosGuardados = JSON.parse(localStorage.getItem('usuarios'))
+	usuariosGuardados.splice(no, 1)
+	localStorage.setItem('usuarios', JSON.stringify(usuariosGuardados))
+
 
 	//Muestra en los inputs del HTMl la fila que se quiere editar de la tabla
 	var title_data = titl.innerHTML;
@@ -125,31 +132,35 @@ function editar(no, ref) {
 	//Función para ocultar el botón Agregar y eliminar todo
 	Ocultar_botones()
 
+	//Deshabilitar la edición de las demás filas, esto con el fin de editar un registro a la vez
+	deshabilitar_botones()
+
 	//LLama la función de editar y guardar cambios
 	ref.setAttribute("onclick", `saveEdit(${no},this)`);
 
 	//Actualiza el contador
 	contador()
+
 }
 
 function saveEdit(no, ref) {
 
-	var new_rol = document.getElementById("Rol").value
-	var new_Salario = document.getElementById("Salario").value;
+	var new_title = document.getElementById("Rol").value
+	var new_salary = document.getElementById("Salario").value;
 	var new_description = document.getElementById("descr").value;
 
-	//Trae la estructura HTML de la fila donde se clicleo el botón siempre trayendo del mas pequeño al mayor
+	//Trae la estructura HTML de la fila donde se dio click al botón siempre trayendo del mas pequeño al mayor
 	var parent = (ref.parentElement).parentElement;
 	var list = document.getElementById(parent.id);
 
-	//Busca los elementos de los 3 inputs
+	//Mediante la clase buca los 3 inputs o elementos donde se debe alamcenar los datos  
 	var title = list.getElementsByClassName(`rowData${no}`)[0];
 	var Salary = list.getElementsByClassName(`slryData${no}`)[0];
 	var desc = list.getElementsByClassName(`descData${no}`)[0];
 
-	//Extrae el contenido de cada elemento
-	title.innerHTML = new_rol;
-	Salary.innerHTML = new_Salario;
+	//Cambia el contenido de las 3 etiquetas directamente en el HTML
+	title.innerHTML = new_title;
+	Salary.innerHTML = new_salary;
 	desc.innerHTML = new_description;
 
 	//Devuelve el valor del boton a editar y su clase anterior
@@ -158,14 +169,20 @@ function saveEdit(no, ref) {
 	ref.removeAttribute("onclick");
 	ref.setAttribute("onclick", `editar(${no},this)`);
 
+	//Agregar el nuevo cambio al array del localstorage en la misma posición del anterior
+	let usuariosGuardados = JSON.parse(localStorage.getItem('usuarios'))
+	let row_edit = { Input: new_title, Salary: new_salary, Descripcion: new_description }
+	usuariosGuardados.splice(no, 0,row_edit)
+	localStorage.setItem('usuarios', JSON.stringify(usuariosGuardados))
+
 	//Devuelve los input a vacio
 	inputs_empty()
 
-	//Develve el poton Crear nuevamente
+	//Habilita los botones Agregar_rol/Eliminar_todo nuevamente
 	habilitar_botones()
-	// document.getElementById('crear').style.display = 'block';
-	// document.getElementById('borrarTodo').style.display = 'block';
 
+	//Devuelve las propiedades Onclick del resto de filas
+	Devolver_propiedades()
 }
 
 //Función para contar los registros y mostrarlo siempre en la pagina
@@ -184,6 +201,7 @@ function contador() {
 	}
 }
 
+
 function Ocultar_botones() {
 	document.getElementById('crear').style.display = 'none';
 	document.getElementById('borrarTodo').style.display = 'none';
@@ -194,15 +212,34 @@ function habilitar_botones() {
 	document.getElementById('borrarTodo').style.display = 'block';
 }
 
+//Vaciar registros en los inputs
 function inputs_empty() {
 	document.getElementById("Rol").value = "";
 	document.getElementById("Salario").value = "";
 	document.getElementById("descr").value = "";
 }
 
+function deshabilitar_botones() {
+	let arrayUsuarios = JSON.parse(localStorage.getItem('usuarios'))
+	arrayUsuarios.forEach((element, i) => {
+		// console.log(i,document.getElementById(`A${i}`))
+		let label_editar = document.getElementById(`A${i}`)
+		label_editar.removeAttribute("onclick");
+	});
 
+}
 
-//Agregar map para validar el guardar cambios que solo salga 1
-//Alimentar contador  ok
-//Alerta para validar campo numerico
+//Habilita nuevamente el atributo onclick en los botones de editar de cada registro
+function Devolver_propiedades() {
+	let usuariosGuardados = JSON.parse(localStorage.getItem('usuarios'))
 
+	//Lee el tamaño del array en el LocalStorage y con base a eso elimina todas las estructura del html una por una
+	usuariosGuardados.map((e, j) => {
+		return document.getElementById("row" + j + "").outerHTML = "";
+	})
+	//El parametro "no" determina  el index a eliminar del localstorage y guarda los cambios
+	cargar()
+	contador()
+	habilitar_botones()
+	inputs_empty()
+}
