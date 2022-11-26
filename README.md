@@ -24,10 +24,3 @@ La pagina web cuenta con las siguientes secciones:
  
 
 ****
-
-## 2. URL
-A Continuación se presenta la URL de la pagina WEB 
-https://coruscating-rolypoly-2efc0c.netlify.app/
-
-
-****
